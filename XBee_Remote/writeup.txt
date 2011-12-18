@@ -1,0 +1,8 @@
+Rover XBee Remote	This is a custom remote control for Arduino based rovers. It implements an Arduino-compatible system, with a 7-segment display, an XBee for wireless serial communications, a set of 7 switches for user input, and a set of 6 accessible analog inputs. Users can reprogram the remote to map different rover actions to the switches and implement a UI based on the display. The default code included with the remote uses only the first two buttons to drive the rover forwards and backwards. 
+ Time for another Arduino-based project! This time, it's a custom remote control built around the atmega328P chip and the XBee wireless transceiver. This board was designed to work with the custom receiver board I built, but will communicate with anything else that has an XBee on it.
+
+	The remote uses a 7-segment display and 7 buttons (plus a reset button) as a user interface, and a 6-pin FTDI header for reprogramming through the Arduino IDE. Default code includes a program that prints the current state of the buttons to the XBee and a program that uses a switch statement to select what to send based on the buttons being pressed. 
+
+Technical Errata:
+
+	The Atmega328P runs off 5 volts, while the XBee runs of 3.3 volts. To convert between the two, a 74AHC125 buffer is used. However, the '125 has another feature that makes it useful. Using the active-low Output Enable pin, its outputs switched to High Impedance at will. This means that the Atmega328P can effectively disconnect itself from the XBee at will. This solves the problem commonly associated with connecting an XBee to an Arduino: 
