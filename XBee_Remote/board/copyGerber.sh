@@ -10,3 +10,4 @@ mv *.TXT gerber
 rm *.gpi 
 rm *.GTP
 rm *.dri
+rm *.GML
