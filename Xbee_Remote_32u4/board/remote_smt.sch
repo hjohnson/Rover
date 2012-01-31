@@ -1603,6 +1603,20 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <text x="-2.54" y="1.381" size="0.4064" layer="25">&gt;NAME</text>
 <text x="0.408" y="1.332" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
+<package name="FIDUCIAL-1.5X3">
+<circle x="0" y="0" radius="0.9055" width="1.27" layer="29"/>
+<smd name="1" x="0" y="0" dx="1.5" dy="1.5" layer="1" roundness="100" cream="no"/>
+</package>
+<package name="FIDUCIAL-1X2">
+<smd name="1" x="0" y="0" dx="1" dy="1" layer="1" roundness="100" cream="no"/>
+</package>
+<package name="FIDUCIAL-1X2.5">
+<circle x="0" y="0" radius="0.9" width="1.27" layer="29"/>
+<smd name="1" x="0" y="0" dx="1" dy="1" layer="1" roundness="100" cream="no"/>
+</package>
+<package name="MICRO-FIDUCIAL">
+<smd name="1" x="0" y="0" dx="0.635" dy="0.635" layer="1" roundness="100" cream="no"/>
+</package>
 </packages>
 <symbols>
 <symbol name="LETTER_L">
@@ -5381,6 +5395,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pin name="+" x="0" y="2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
 <pin name="-" x="0" y="-5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
 </symbol>
+<symbol name="FIDUCIAL">
+<wire x1="-0.762" y1="0.762" x2="0.762" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="0.762" y1="0.762" x2="-0.762" y2="-0.762" width="0.254" layer="94"/>
+<circle x="0" y="0" radius="1.27" width="0.254" layer="94"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="FRAME-LETTER" prefix="FRAME">
@@ -6235,6 +6254,35 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <connect gate="G$1" pin="+" pad="A"/>
 <connect gate="G$1" pin="-" pad="C"/>
 </connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="FIDUCIAL" prefix="JP">
+<description>&lt;b&gt;Fiducial Alignment Points&lt;/b&gt;
+Various fiducial points for machine vision alignment.</description>
+<gates>
+<gate name="G$1" symbol="FIDUCIAL" x="0" y="0"/>
+</gates>
+<devices>
+<device name="1.5X3" package="FIDUCIAL-1.5X3">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="1X2" package="FIDUCIAL-1X2">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="1X2.5" package="FIDUCIAL-1X2.5">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="UFIDUCIAL" package="MICRO-FIDUCIAL">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -7976,8 +8024,8 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <part name="U$9" library="SparkFun" deviceset="5V" device=""/>
 <part name="P+2" library="SparkFun" deviceset="3.3V" device=""/>
 <part name="GND4" library="SparkFun" deviceset="GND" device=""/>
-<part name="C6" library="SparkFun" deviceset="CAP" device="0805"/>
-<part name="C7" library="SparkFun" deviceset="CAP" device="0805"/>
+<part name="C6" library="SparkFun" deviceset="CAP" device="0805" value="18pF"/>
+<part name="C7" library="SparkFun" deviceset="CAP" device="0805" value="18pF"/>
 <part name="GND12" library="SparkFun" deviceset="GND" device=""/>
 <part name="U$11" library="hjohnson_library" deviceset="SPST_SWITCH" device=""/>
 <part name="U$12" library="hjohnson_library" deviceset="SPST_SWITCH" device=""/>
@@ -8007,6 +8055,8 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <part name="R6" library="SparkFun" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="GND1" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND2" library="SparkFun" deviceset="GND" device=""/>
+<part name="JP2" library="SparkFun" deviceset="FIDUCIAL" device="1.5X3"/>
+<part name="JP3" library="SparkFun" deviceset="FIDUCIAL" device="1.5X3"/>
 </parts>
 <sheets>
 <sheet>
@@ -8183,7 +8233,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
 <instance part="FRAME1" gate="G$2" x="147.32" y="0"/>
 <instance part="U$7" gate="G$1" x="129.54" y="121.92" smashed="yes">
-<attribute name="NAME" x="60.96" y="104.14" size="1.778" layer="95"/>
+<attribute name="NAME" x="129.286" y="168.91" size="1.778" layer="95"/>
 <attribute name="VALUE" x="124.46" y="167.64" size="1.778" layer="96"/>
 </instance>
 <instance part="X1" gate="G$1" x="93.98" y="114.3" rot="R90"/>
@@ -8241,6 +8291,8 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <instance part="R6" gate="G$1" x="121.92" y="60.96" rot="R90"/>
 <instance part="GND1" gate="1" x="121.92" y="53.34"/>
 <instance part="GND2" gate="1" x="233.68" y="134.62"/>
+<instance part="JP2" gate="G$1" x="88.9" y="76.2"/>
+<instance part="JP3" gate="G$1" x="86.36" y="76.2"/>
 </instances>
 <busses>
 </busses>
@@ -8562,23 +8614,20 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <junction x="233.68" y="144.78"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$1" pin="AVCC1"/>
-<pinref part="U$7" gate="G$1" pin="AVCC"/>
-<pinref part="U$7" gate="G$1" pin="UVCC"/>
 <pinref part="U$7" gate="G$1" pin="VCC1"/>
 <pinref part="U$7" gate="G$1" pin="VCC"/>
 <wire x1="106.68" y1="152.4" x2="106.68" y2="149.86" width="0.1524" layer="91"/>
-<junction x="106.68" y="149.86"/>
-<wire x1="106.68" y1="149.86" x2="106.68" y2="147.32" width="0.1524" layer="91"/>
-<junction x="106.68" y="147.32"/>
-<wire x1="106.68" y1="147.32" x2="106.68" y2="144.78" width="0.1524" layer="91"/>
-<junction x="106.68" y="144.78"/>
-<wire x1="106.68" y1="144.78" x2="106.68" y2="142.24" width="0.1524" layer="91"/>
-<junction x="106.68" y="142.24"/>
 <pinref part="P+1" gate="G$1" pin="3.3V"/>
 <wire x1="106.68" y1="152.4" x2="101.6" y2="152.4" width="0.1524" layer="91"/>
 <junction x="101.6" y="152.4"/>
 <junction x="106.68" y="152.4"/>
+<pinref part="U$7" gate="G$1" pin="AVCC1"/>
+<junction x="106.68" y="142.24"/>
+<pinref part="U$7" gate="G$1" pin="AVCC"/>
+<wire x1="106.68" y1="144.78" x2="106.68" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="144.78" x2="101.6" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="144.78" x2="101.6" y2="152.4" width="0.1524" layer="91"/>
+<junction x="106.68" y="144.78"/>
 </segment>
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
