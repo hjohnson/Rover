@@ -8248,8 +8248,8 @@ http://search.digikey.com/scripts/DkSearch/dksus.dll?Detail&amp;name=EG2513-ND</
 <text x="35.56" y="135.89" size="1.778" layer="94">5</text>
 <text x="35.56" y="132.08" size="1.778" layer="94">6</text>
 <text x="35.56" y="128.27" size="1.778" layer="94">7</text>
-<text x="35.56" y="120.65" size="1.778" layer="94">8</text>
-<text x="35.56" y="124.46" size="1.778" layer="94">9</text>
+<text x="35.56" y="120.65" size="1.778" layer="94">9</text>
+<text x="35.56" y="124.46" size="1.778" layer="94">8</text>
 <text x="35.56" y="116.84" size="1.778" layer="94">10</text>
 <text x="35.56" y="113.03" size="1.778" layer="94">11</text>
 <text x="35.56" y="109.22" size="1.778" layer="94">12</text>
@@ -8731,10 +8731,10 @@ http://search.digikey.com/scripts/DkSearch/dksus.dll?Detail&amp;name=EG2513-ND</
 <junction x="185.42" y="121.92"/>
 </segment>
 <segment>
-<wire x1="134.62" y1="93.98" x2="144.78" y2="93.98" width="0.2032" layer="91"/>
-<label x="144.78" y="93.98" size="1.778" layer="95"/>
-<pinref part="IC1" gate="G$1" pin="PB0(ICP)"/>
-<junction x="134.62" y="93.98"/>
+<wire x1="134.62" y1="91.44" x2="144.78" y2="91.44" width="0.2032" layer="91"/>
+<label x="144.78" y="91.44" size="1.778" layer="95"/>
+<pinref part="IC1" gate="G$1" pin="PB1(OC1A)"/>
+<junction x="134.62" y="91.44"/>
 </segment>
 </net>
 <net name="3V3_TX" class="0">
@@ -8965,16 +8965,16 @@ http://search.digikey.com/scripts/DkSearch/dksus.dll?Detail&amp;name=EG2513-ND</
 </net>
 <net name="IO6" class="0">
 <segment>
-<wire x1="134.62" y1="91.44" x2="144.78" y2="91.44" width="0.2032" layer="91"/>
-<label x="144.78" y="91.44" size="1.778" layer="95"/>
-<pinref part="IC1" gate="G$1" pin="PB1(OC1A)"/>
-<junction x="134.62" y="91.44"/>
-</segment>
-<segment>
 <wire x1="139.7" y1="63.5" x2="139.7" y2="68.58" width="0.2032" layer="91"/>
 <label x="139.7" y="68.58" size="1.778" layer="95" rot="R90"/>
 <pinref part="U$15" gate="G$1" pin="1"/>
 <junction x="139.7" y="63.5"/>
+</segment>
+<segment>
+<wire x1="134.62" y1="93.98" x2="144.78" y2="93.98" width="0.2032" layer="91"/>
+<label x="144.78" y="93.98" size="1.778" layer="95"/>
+<pinref part="IC1" gate="G$1" pin="PB0(ICP)"/>
+<junction x="134.62" y="93.98"/>
 </segment>
 </net>
 <net name="LATCHENABLE" class="0">
