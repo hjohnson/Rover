@@ -45,6 +45,10 @@ XBee Remote, demo 1
  Q5: E
  Q6: F
  Q7: G, MSB
+ 
+ Errata: 
+ Arduino must have changed some of the timing requirements for bootloading with the Uno, because using the Uno firmware on this board seems to provoke bootloading issues on some computers. 
+ As such, I'd suggest sticking to using the "Duemilanove (w/328P)" board option when using the full custom board.
  */
 byte segVal[16]; //to store the 16 patterns for the 7-segment display
 
@@ -56,7 +60,6 @@ const byte clockPin = 13;
 
 int previousPinValue = -1; 
 int pinValue = 0; //see getPins
-
 
 //Utility methods. You shouldn't have to modify these.
 void displayValue(int value) {
@@ -95,19 +98,16 @@ void segSetup() { //The various 7 segment characters.
   displayValue(0x0);
 }
 
-//XBee Code
-void enableXBee() {
+void enableXBee() { //enable communication with the Xbee through the buffer.
   pinMode(xbeeEnablePin, OUTPUT);
-  digitalWrite(8, LOW); //active low enable XBee communications.
+  digitalWrite(8, LOW); //active low enable XBee communications pin.
   delay(1);
 }
 
-void disableXBee() {
+void disableXBee() { //disconnects the Xbee from the remote using the buffer's output enable pins.
   pinMode(xbeeEnablePin, INPUT); //switch XBee enable pin to high-impedance, external pull-up resistor keeps it disabled.
   delay(1);
 }
-
-
 
 unsigned int getPins() { //easy way to do switch statements based on pin states. Not required, though.
   unsigned int result =0;
@@ -119,30 +119,28 @@ unsigned int getPins() { //easy way to do switch statements based on pin states.
 
 //end of utility methods.
 
-//Program here!
+//Various setup functions. 7-segment, pin modes, XBee, etc.
 void setup() {
-  Serial.begin(9600); //XBee uses 9600.
-  Serial.flush(); //flush output buffer.
-  Serial.println("Remote Control Ready");
-  disableXBee(); //tri-state the pins.
-
   segSetup(); //setup the segment values, etc. 
-  for(byte ii = 2; ii<=8; ii++) { //switches 0-5 inputs.
+  for(byte ii = 2; ii<=8; ii++) { //switches 0-6 inputs.
     pinMode(ii, INPUT); //input
     digitalWrite(ii, HIGH); //internal pullups enabled.
   }
+  Serial.begin(9600); //XBee uses 9600 bits per second.
   enableXBee(); //enable the XBee pins.
   displayValue(0xF);
+  Serial.println("Remote Control Ready");
 }
 
+//Program here!
 void loop() {
   previousPinValue = pinValue; //so that when it reads the new pin values, it can tell if there's been a change.
-  pinValue = getPins();
-  if(pinValue != previousPinValue) {
-  Serial.println(pinValue);
+  pinValue = getPins(); //update pin values
+  if(pinValue != previousPinValue) { //only send data on change of switches pressed, to prevent data overload.
+    Serial.println(pinValue);
   }
-  delay(10);
 }
+
 
 
 
