@@ -3151,7 +3151,7 @@ http://www.ladyada.net/library/pcb/eaglelibrary.html</description>
 <wire x1="106.68" y1="27.94" x2="106.68" y2="30.48" width="0.4064" layer="94"/>
 <wire x1="109.22" y1="27.94" x2="109.22" y2="30.48" width="0.4064" layer="94"/>
 <text x="10.16" y="20.32" size="1.778" layer="94">When connecting to XBee, (Arduino TX-&gt;XBee RX) (Arduino RX -&gt; Xbee TX)</text>
-<text x="20.32" y="175.26" size="1.778" layer="97">Harry Johnson, hjohnson.posterous.com</text>
+<text x="20.32" y="175.26" size="1.778" layer="97">Harry Johnson, https://github.com/hjohnson</text>
 <text x="149.86" y="30.48" size="2.54" layer="94">Arduino-Based Rover Control Card</text>
 <text x="12.7" y="162.56" size="1.778" layer="94">Douglas Electronics</text>
 <text x="12.7" y="160.02" size="1.778" layer="94">56-pin STD card</text>
