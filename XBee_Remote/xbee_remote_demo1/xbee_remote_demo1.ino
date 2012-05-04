@@ -1,22 +1,11 @@
 /*
-XBee Remote, demo 1
- By Harry Johnson
- This file is part of Xbee Remote
+ XBee Remote, demo 1
+ Author: Harry Johnson
+ This is the basic code, intended for combination with the XBee Remote Control sold by KippKitts 
+ http://kippkitts.com
+ http://github.com/hjohnson/Rover
  
- This is the basic code, intended for combination with the XBee Remote Control.
- 
- Xbee Remote is free software: you can redistribute it and/or modify
- it under the terms of the GNU Lesser Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
- 
- XBee Remote is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU Lesser Public License for more details.
- 
- You should have received a copy of the GNU Lesser Public License
- along with XBee Remote.  If not, see <http://www.gnu.org/licenses/>.
+ This code is released into the Public Domain, you're free to use it however you wish. (The hardware design, however, remains under CC BY/SA)
  
  Reference:
  
@@ -29,12 +18,16 @@ XBee Remote, demo 1
  5: Switch 3
  6: Switch 4
  7: Switch 5
- 8: Switch 6
+ 8: Switch 6, joystick button.
  9: XBee Comm enable, active low.
  10: LED Latch Enable, not on the SPI bus.
  11: Latch DS, data pin
  12: Latch ST_CP Latchpin
  13: Latch SH_CP clockPin.
+ 
+ Analog Pins:
+ 0: Vertical ADC input from joystick. 
+ 1: Horizontal ADC input from joystick.
  
  Seven Segment Assignments
  Q0: Decimal, LSB
@@ -49,6 +42,7 @@ XBee Remote, demo 1
  Errata: 
  Arduino must have changed some of the timing requirements for bootloading with the Uno, because using the Uno firmware on this board seems to provoke bootloading issues on some computers. 
  As such, I'd suggest sticking to using the "Duemilanove (w/328P)" board option when using the full custom board.
+ Also, the board runs at 3.3V, so it'd be a good idea to use a 3.3V FTDI cable. However, in theory the XBee is protected no matter what, due to the 3.3V powered 74HC125.
  */
 byte segVal[16]; //to store the 16 patterns for the 7-segment display
 
@@ -57,12 +51,15 @@ const byte sevenSegEnablePin = 10;
 const byte dataPin = 11;
 const byte latchPin = 12;
 const byte clockPin = 13;
+const byte verticalADC = 0; //vertical joystick input.
+const byte horizontalADC = 1; //horizontal joystick input.
 
-int previousPinValue = -1; 
-int pinValue = 0; //see getPins
+byte previousPinValue = 0xFF; //this case is impossible to get, even by pressing all of the buttons. 
+byte pinValue = 0; //see getPins
+byte changeCounter = 0; //to increment display.
 
 //Utility methods. You shouldn't have to modify these.
-void displayValue(int value) {
+void displayValue(byte value) { //use this function to display a value (0-0x0F) on the 7-segment display!
   displayRawValue(segVal[value]);
 }
 
@@ -109,10 +106,10 @@ void disableXBee() { //disconnects the Xbee from the remote using the buffer's o
   delay(1);
 }
 
-unsigned int getPins() { //easy way to do switch statements based on pin states. Not required, though.
-  unsigned int result =0;
+byte getPins() { //easy way to do switch statements based on pin states. Not required, though.
+  byte result =0;
   for(int ii = 0; ii<=6; ii++) {
-    result |= ((1-(digitalRead(ii+2))) << ii); //if appropriate pin is LOW (active low switch), then activate appropriate bit.
+    result |= ((1-((byte)digitalRead(ii+2))) << ii); //if appropriate pin is LOW (active low switch), then activate appropriate bit.
   }
   return result;
 }
@@ -126,9 +123,10 @@ void setup() {
     pinMode(ii, INPUT); //input
     digitalWrite(ii, HIGH); //internal pullups enabled.
   }
+  
   Serial.begin(9600); //XBee uses 9600 bits per second.
   enableXBee(); //enable the XBee pins.
-  displayValue(0xF);
+  
   Serial.println("Remote Control Ready");
 }
 
@@ -138,8 +136,18 @@ void loop() {
   pinValue = getPins(); //update pin values
   if(pinValue != previousPinValue) { //only send data on change of switches pressed, to prevent data overload.
     Serial.println(pinValue);
+    if((pinValue & (1<<6))==1) { //if the joystick button was pressed, print current position
+      Serial.print("Vertical: ");
+      Serial.println(analogRead(verticalADC));
+      Serial.print("Horizontal: ");
+      Serial.println(analogRead(horizontalADC));
+    }
+    changeCounter++;
+    if(changeCounter ==0x10) changeCounter = 0; //max we can display is 0x0F
+    displayValue(changeCounter); //display the number of times the buttons have been pressed/released. 
   }
 }
+
 
 
 
